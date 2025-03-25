@@ -101,8 +101,14 @@ var quotes = [
 ];
 var savedPosters = [];
 var currentPoster;
+const randPosterTitle = document.querySelector(".poster-title")
+const randPosterQuote = document.querySelector(".poster-quote")
+const randPosterImg = document.querySelector(".poster-img")
+const showRandom = document.querySelector(".show-random")
 
 // event listeners go here 👇
+
+showRandom.addEventListener("click", () => location.reload())
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -117,3 +123,12 @@ function createPoster(imageURL, title, quote) {
     title: title, 
     quote: quote}
 }
+
+function getRandomElement(array, randIndex) {
+  return array[randIndex]
+}
+
+// is this really where this should go? feels odd.
+randPosterTitle.innerText = getRandomElement(titles, getRandomIndex(images))
+randPosterQuote.innerText = getRandomElement(quotes, getRandomIndex(images))
+randPosterImg.src = getRandomElement(images, getRandomIndex(images))
