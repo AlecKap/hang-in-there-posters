@@ -104,11 +104,26 @@ var currentPoster;
 const randPosterTitle = document.querySelector(".poster-title")
 const randPosterQuote = document.querySelector(".poster-quote")
 const randPosterImg = document.querySelector(".poster-img")
-const showRandom = document.querySelector(".show-random")
+const showRandomButton = document.querySelector(".show-random")
+const showFormButton = document.querySelector(".show-form")
+const showMainButton = document.querySelector(".show-main")
+const backToMainButton = document.querySelector(".back-to-main")
+const showSavedButton = document.querySelector(".show-saved")
+const posterForm = document.querySelector(".poster-form")
+const mainPoster = document.querySelector(".main-poster")
+const savedPostersView = document.querySelector(".saved-posters")
 
-// event listeners go here 👇
+// is this really where this should go? feels odd.
+randPosterTitle.innerText = getRandomElement(titles, getRandomIndex(images))
+randPosterQuote.innerText = getRandomElement(quotes, getRandomIndex(images))
+randPosterImg.src = getRandomElement(images, getRandomIndex(images))
 
-showRandom.addEventListener("click", () => location.reload())
+// event listeners go here 👇)
+showRandomButton.addEventListener("click", setRandomPoster)
+showFormButton.addEventListener("click", displayForm)
+showMainButton.addEventListener("click", displayMainPoster)
+backToMainButton.addEventListener("click", displayMainPoster)
+showSavedButton.addEventListener("click", displaySavedPosters)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -128,7 +143,28 @@ function getRandomElement(array, randIndex) {
   return array[randIndex]
 }
 
-// is this really where this should go? feels odd.
-randPosterTitle.innerText = getRandomElement(titles, getRandomIndex(images))
-randPosterQuote.innerText = getRandomElement(quotes, getRandomIndex(images))
-randPosterImg.src = getRandomElement(images, getRandomIndex(images))
+function setRandomPoster() {
+  randPosterTitle.innerText = getRandomElement(titles, getRandomIndex(images))
+  randPosterQuote.innerText = getRandomElement(quotes, getRandomIndex(images))
+  randPosterImg.src = getRandomElement(images, getRandomIndex(images))
+}
+
+function displayMainPoster() {
+  posterForm.classList.add("hidden")
+  savedPostersView.classList.add("hidden")
+  mainPoster.classList.remove("hidden")
+}
+
+function displaySavedPosters() {
+  mainPoster.classList.add("hidden")
+  posterForm.classList.add("hidden")
+  savedPostersView.classList.remove("hidden")
+}
+
+function displayForm() {
+  mainPoster.classList.add("hidden")
+  savedPostersView.classList.add("hidden")
+  posterForm.classList.remove("hidden")
+}
+
+
