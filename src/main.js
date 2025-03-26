@@ -106,6 +106,7 @@ var currentPoster;
 const posterTitle = document.querySelector(".poster-title");
 const posterQuote = document.querySelector(".poster-quote");
 const posterImg = document.querySelector(".poster-img");
+const posterGrid = document.querySelector(".saved-posters-grid");
 
 const showRandomButton = document.querySelector(".show-random");
 const showFormButton = document.querySelector(".show-form");
@@ -135,6 +136,7 @@ showFormButton.addEventListener("click", displayForm);
 showMainButton.addEventListener("click", displayMainPoster);
 backToMainButton.addEventListener("click", displayMainPoster);
 showSavedButton.addEventListener("click", displaySavedPosters);
+showSavedButton.addEventListener("click", showSavedPosters);
 showPosterButton.addEventListener("click", setCurrentPoster);
 savePosterButton.addEventListener("click", savePoster);
 
@@ -176,7 +178,6 @@ function savePoster() {
   if (!savedPosters.includes(currentPoster)) {
     savedPosters.push(currentPoster);
   }
-
 }
 
 function setRandomPoster() {
@@ -184,7 +185,29 @@ function setRandomPoster() {
   posterQuote.innerText = quotes[getRandomIndex(images)];
   posterImg.src = images[getRandomIndex(images)];
 
-  currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText)
+  currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText);
+}
+
+function showSavedPosters(){
+  savedPosters.forEach(poster => {
+    const posterDiv = document.createElement("div");
+    posterDiv.classList.add("mini-poster");
+  
+    const img = document.createElement("img");
+    img.classList.add("img");
+    img.src = poster.imageURL;
+    posterDiv.appendChild(img);
+    
+    const title = document.createElement("h2");
+    title.textContent = poster.title;
+    posterDiv.appendChild(title);
+    
+    const quote = document.createElement("h4");
+    quote.textContent = poster.quote;
+    posterDiv.appendChild(quote);
+  
+    posterGrid.appendChild(posterDiv);
+  });
 }
 
 function displayMainPoster() {
@@ -208,7 +231,7 @@ function displayForm() {
 // HELPER METHODS
 
 function ensureDataUniqueness() {
-  let uniqImgs = [...new Set(images)]
+  let uniqImgs = [...new Set(images)] // not sure if this is an appropriate use of a Set?
   let uniqTitles = [...new Set(titles)]
   let uniqQuotes = [...new Set(quotes)]
 
