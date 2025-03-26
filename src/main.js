@@ -113,6 +113,7 @@ const showMainButton = document.querySelector(".show-main");
 const backToMainButton = document.querySelector(".back-to-main");
 const showSavedButton = document.querySelector(".show-saved");
 const showPosterButton = document.querySelector(".make-poster");
+const savePosterButton = document.querySelector(".save-poster");
 
 const posterForm = document.querySelector(".poster-form");
 const mainPoster = document.querySelector(".main-poster");
@@ -126,6 +127,7 @@ const quoteInput = document.querySelector("#poster-quote");
 posterTitle.innerText = titles[getRandomIndex(images)];
 posterQuote.innerText = quotes[getRandomIndex(images)];
 posterImg.src = images[getRandomIndex(images)];
+currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText)
 
 // event listeners go here 👇)
 showRandomButton.addEventListener("click", setRandomPoster);
@@ -134,6 +136,7 @@ showMainButton.addEventListener("click", displayMainPoster);
 backToMainButton.addEventListener("click", displayMainPoster);
 showSavedButton.addEventListener("click", displaySavedPosters);
 showPosterButton.addEventListener("click", setCurrentPoster);
+savePosterButton.addEventListener("click", savePoster);
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -150,8 +153,7 @@ function createPoster(imageURL, title, quote) {
   }
 }
 
-
-function setCurrentPoster(event) {
+function setCurrentPoster(event) { // consider renaming this function. it doesn't seem so accurate
   event.preventDefault();
 
   currentPoster = createPoster(imgInput.value, titleInput.value, quoteInput.value);
@@ -169,10 +171,20 @@ function setCurrentPoster(event) {
   posterImg.src = currentPoster.imageURL;
 }
 
+function savePoster() {
+  console.log(currentPoster)
+  if (!savedPosters.includes(currentPoster)) {
+    savedPosters.push(currentPoster);
+  }
+
+}
+
 function setRandomPoster() {
   posterTitle.innerText = titles[getRandomIndex(images)];
   posterQuote.innerText = quotes[getRandomIndex(images)];
   posterImg.src = images[getRandomIndex(images)];
+
+  currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText)
 }
 
 function displayMainPoster() {
