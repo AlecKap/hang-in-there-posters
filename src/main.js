@@ -102,6 +102,7 @@ var quotes = [
 
 var savedPosters = [];
 var currentPoster;
+
 const posterTitle = document.querySelector(".poster-title");
 const posterQuote = document.querySelector(".poster-quote");
 const posterImg = document.querySelector(".poster-img");
@@ -117,9 +118,9 @@ const posterForm = document.querySelector(".poster-form");
 const mainPoster = document.querySelector(".main-poster");
 const savedPostersView = document.querySelector(".saved-posters");
 
-const imgInput = document.querySelector("poster-image-url");
-const titleInput = document.querySelector("poster-title");
-const quoteInput = document.querySelector("poster-quote");
+const imgInput = document.querySelector("#poster-image-url");
+const titleInput = document.querySelector("#poster-title");
+const quoteInput = document.querySelector("#poster-quote");
 
 // is this really where this should go? feels odd.
 posterTitle.innerText = titles[getRandomIndex(images)];
@@ -149,6 +150,7 @@ function createPoster(imageURL, title, quote) {
   }
 }
 
+
 function setCurrentPoster(event) {
   event.preventDefault();
 
@@ -157,6 +159,8 @@ function setCurrentPoster(event) {
   images.push(imgInput.value);
   titles.push(titleInput.value);
   quotes.push(quoteInput.value);
+
+  ensureDataUniqueness();
 
   displayMainPoster();
 
@@ -189,14 +193,14 @@ function displayForm() {
   posterForm.classList.remove("hidden");
 }
 
-// attempt to refactor into this one method
-// function changeDisplay(view) {
-  
-// }
+// HELPER METHODS
 
+function ensureDataUniqueness() {
+  let uniqImgs = [...new Set(images)]
+  let uniqTitles = [...new Set(titles)]
+  let uniqQuotes = [...new Set(quotes)]
 
-
-
-
-
-// make sure that arrays have no repeats
+  images = uniqImgs
+  titles = uniqTitles
+  quotes = uniqQuotes
+}
