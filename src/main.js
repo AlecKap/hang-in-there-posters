@@ -99,31 +99,40 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
+
 var savedPosters = [];
 var currentPoster;
-const randPosterTitle = document.querySelector(".poster-title")
-const randPosterQuote = document.querySelector(".poster-quote")
-const randPosterImg = document.querySelector(".poster-img")
-const showRandomButton = document.querySelector(".show-random")
-const showFormButton = document.querySelector(".show-form")
-const showMainButton = document.querySelector(".show-main")
-const backToMainButton = document.querySelector(".back-to-main")
-const showSavedButton = document.querySelector(".show-saved")
-const posterForm = document.querySelector(".poster-form")
-const mainPoster = document.querySelector(".main-poster")
-const savedPostersView = document.querySelector(".saved-posters")
+const posterTitle = document.querySelector(".poster-title");
+const posterQuote = document.querySelector(".poster-quote");
+const posterImg = document.querySelector(".poster-img");
+
+const showRandomButton = document.querySelector(".show-random");
+const showFormButton = document.querySelector(".show-form");
+const showMainButton = document.querySelector(".show-main");
+const backToMainButton = document.querySelector(".back-to-main");
+const showSavedButton = document.querySelector(".show-saved");
+const showPosterButton = document.querySelector(".make-poster");
+
+const posterForm = document.querySelector(".poster-form");
+const mainPoster = document.querySelector(".main-poster");
+const savedPostersView = document.querySelector(".saved-posters");
+
+const imgInput = document.querySelector("poster-image-url");
+const titleInput = document.querySelector("poster-title");
+const quoteInput = document.querySelector("poster-quote");
 
 // is this really where this should go? feels odd.
-randPosterTitle.innerText = titles[getRandomIndex(images)]
-randPosterQuote.innerText = quotes[getRandomIndex(images)]
-randPosterImg.src = images[getRandomIndex(images)]
+posterTitle.innerText = titles[getRandomIndex(images)];
+posterQuote.innerText = quotes[getRandomIndex(images)];
+posterImg.src = images[getRandomIndex(images)];
 
 // event listeners go here 👇)
-showRandomButton.addEventListener("click", setRandomPoster)
-showFormButton.addEventListener("click", displayForm)
-showMainButton.addEventListener("click", displayMainPoster)
-backToMainButton.addEventListener("click", displayMainPoster)
-showSavedButton.addEventListener("click", displaySavedPosters)
+showRandomButton.addEventListener("click", setRandomPoster);
+showFormButton.addEventListener("click", displayForm);
+showMainButton.addEventListener("click", displayMainPoster);
+backToMainButton.addEventListener("click", displayMainPoster);
+showSavedButton.addEventListener("click", displaySavedPosters);
+showPosterButton.addEventListener("click", setCurrentPoster);
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -136,31 +145,48 @@ function createPoster(imageURL, title, quote) {
     id: Date.now(), 
     imageURL: imageURL, 
     title: title, 
-    quote: quote}
+    quote: quote
+  }
+}
+
+function setCurrentPoster(event) {
+  event.preventDefault();
+
+  currentPoster = createPoster(imgInput.value, titleInput.value, quoteInput.value);
+  
+  images.push(imgInput.value);
+  titles.push(titleInput.value);
+  quotes.push(quoteInput.value);
+
+  displayMainPoster();
+
+  posterTitle.innerText = currentPoster.title;
+  posterQuote.innerText = currentPoster.quote;
+  posterImg.src = currentPoster.imageURL;
 }
 
 function setRandomPoster() {
-  randPosterTitle.innerText = titles[getRandomIndex(images)]
-  randPosterQuote.innerText = quotes[getRandomIndex(images)]
-  randPosterImg.src = images[getRandomIndex(images)]
+  posterTitle.innerText = titles[getRandomIndex(images)];
+  posterQuote.innerText = quotes[getRandomIndex(images)];
+  posterImg.src = images[getRandomIndex(images)];
 }
 
 function displayMainPoster() {
-  posterForm.classList.add("hidden")
-  savedPostersView.classList.add("hidden")
-  mainPoster.classList.remove("hidden")
+  posterForm.classList.add("hidden");
+  savedPostersView.classList.add("hidden");
+  mainPoster.classList.remove("hidden");
 }
 
 function displaySavedPosters() {
-  mainPoster.classList.add("hidden")
-  posterForm.classList.add("hidden")
-  savedPostersView.classList.remove("hidden")
+  mainPoster.classList.add("hidden");
+  posterForm.classList.add("hidden");
+  savedPostersView.classList.remove("hidden");
 }
 
 function displayForm() {
-  mainPoster.classList.add("hidden")
-  savedPostersView.classList.add("hidden")
-  posterForm.classList.remove("hidden")
+  mainPoster.classList.add("hidden");
+  savedPostersView.classList.add("hidden");
+  posterForm.classList.remove("hidden");
 }
 
 // attempt to refactor into this one method
@@ -168,3 +194,9 @@ function displayForm() {
   
 // }
 
+
+
+
+
+
+// make sure that arrays have no repeats
