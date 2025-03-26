@@ -114,9 +114,9 @@ const mainPoster = document.querySelector(".main-poster")
 const savedPostersView = document.querySelector(".saved-posters")
 
 // is this really where this should go? feels odd.
-randPosterTitle.innerText = getRandomElement(titles, getRandomIndex(images))
-randPosterQuote.innerText = getRandomElement(quotes, getRandomIndex(images))
-randPosterImg.src = getRandomElement(images, getRandomIndex(images))
+randPosterTitle.innerText = titles[getRandomIndex(images)]
+randPosterQuote.innerText = quotes[getRandomIndex(images)]
+randPosterImg.src = images[getRandomIndex(images)]
 
 // event listeners go here 👇)
 showRandomButton.addEventListener("click", setRandomPoster)
@@ -139,14 +139,10 @@ function createPoster(imageURL, title, quote) {
     quote: quote}
 }
 
-function getRandomElement(array, randIndex) {
-  return array[randIndex]
-}
-
 function setRandomPoster() {
-  randPosterTitle.innerText = getRandomElement(titles, getRandomIndex(images))
-  randPosterQuote.innerText = getRandomElement(quotes, getRandomIndex(images))
-  randPosterImg.src = getRandomElement(images, getRandomIndex(images))
+  randPosterTitle.innerText = titles[getRandomIndex(images)]
+  randPosterQuote.innerText = quotes[getRandomIndex(images)]
+  randPosterImg.src = images[getRandomIndex(images)]
 }
 
 function displayMainPoster() {
@@ -167,4 +163,8 @@ function displayForm() {
   posterForm.classList.remove("hidden")
 }
 
+// attempt to refactor into this one method
+// function changeDisplay(view) {
+  
+// }
 
