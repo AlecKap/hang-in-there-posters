@@ -108,17 +108,19 @@ const posterQuote = document.querySelector(".poster-quote");
 const posterImg = document.querySelector(".poster-img");
 const posterGrid = document.querySelector(".saved-posters-grid");
 
-const showRandomButton = document.querySelector(".show-random");
-const showFormButton = document.querySelector(".show-form");
-const showMainButton = document.querySelector(".show-main");
-const backToMainButton = document.querySelector(".back-to-main");
-const showSavedButton = document.querySelector(".show-saved");
-const showPosterButton = document.querySelector(".make-poster");
-const savePosterButton = document.querySelector(".save-poster");
+const showRandomBtn = document.querySelector(".show-random");
+const showFormBtn = document.querySelector(".show-form");
+const showMainBtn = document.querySelector(".show-main");
+const backToMainBtn = document.querySelectorAll(".back-to-main");
+const showSavedBtn = document.querySelector(".show-saved");
+const showPosterBtn = document.querySelector(".make-poster");
+const savePosterBtn = document.querySelector(".save-poster");
+const unmotivationalPostersBtn = document.querySelector(".unmotivational-posters-btn");
 
 const posterForm = document.querySelector(".poster-form");
 const mainPoster = document.querySelector(".main-poster");
 const savedPostersView = document.querySelector(".saved-posters");
+const unmotivationalPostersSection = document.querySelector(".unmotivational-posters");
 
 const imgInput = document.querySelector("#poster-image-url");
 const titleInput = document.querySelector("#poster-title");
@@ -132,16 +134,19 @@ const quoteInput = document.querySelector("#poster-quote");
 
 // event listeners go here 👇)
 window.addEventListener("load", setRandomPoster) // Set a random poster apon initial page load
-showRandomButton.addEventListener("click", setRandomPoster);
-showFormButton.addEventListener("click", displayForm);
-showMainButton.addEventListener("click", displayMainPoster);
-backToMainButton.addEventListener("click", displayMainPoster);
-showSavedButton.addEventListener("click", function() {
+showRandomBtn.addEventListener("click", setRandomPoster);
+showFormBtn.addEventListener("click", displayForm);
+showMainBtn.addEventListener("click", displayMainPoster);
+backToMainBtn.forEach(btn => {
+  btn.addEventListener("click", displayMainPoster);
+});
+unmotivationalPostersBtn.addEventListener("click", displayUnmotivationalPosters);
+showSavedBtn.addEventListener("click", function() {
   showSavedPosters()
   displaySavedPosters()
 });
-showPosterButton.addEventListener("click", setCurrentPoster);
-savePosterButton.addEventListener("click", savePoster);
+showPosterBtn.addEventListener("click", setCurrentPoster);
+savePosterBtn.addEventListener("click", savePoster);
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -218,19 +223,29 @@ function showSavedPosters() {
 function displayMainPoster() {
   posterForm.classList.add("hidden");
   savedPostersView.classList.add("hidden");
+  unmotivationalPostersSection.classList.add("hidden");
   mainPoster.classList.remove("hidden");
 }
 
 function displaySavedPosters() {
   mainPoster.classList.add("hidden");
   posterForm.classList.add("hidden");
+  unmotivationalPostersSection.classList.add("hidden");
   savedPostersView.classList.remove("hidden");
 }
 
 function displayForm() {
   mainPoster.classList.add("hidden");
   savedPostersView.classList.add("hidden");
+  unmotivationalPostersSection.classList.add("hidden");
   posterForm.classList.remove("hidden");
+}
+
+function displayUnmotivationalPosters() {
+  mainPoster.classList.add("hidden");
+  savedPostersView.classList.add("hidden");
+  posterForm.classList.add("hidden");
+  unmotivationalPostersSection.classList.remove("hidden");
 }
 
 // HELPER METHODS
