@@ -125,12 +125,13 @@ const titleInput = document.querySelector("#poster-title");
 const quoteInput = document.querySelector("#poster-quote");
 
 // is this really where this should go? feels odd.
-posterTitle.innerText = titles[getRandomIndex(images)];
-posterQuote.innerText = quotes[getRandomIndex(images)];
-posterImg.src = images[getRandomIndex(images)];
-currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText)
+// posterTitle.innerText = titles[getRandomIndex(images)];
+// posterQuote.innerText = quotes[getRandomIndex(images)];
+// posterImg.src = images[getRandomIndex(images)];
+// currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText)
 
 // event listeners go here 👇)
+window.addEventListener("load", setRandomPoster) // Set a random poster apon initial page load
 showRandomButton.addEventListener("click", setRandomPoster);
 showFormButton.addEventListener("click", displayForm);
 showMainButton.addEventListener("click", displayMainPoster);
