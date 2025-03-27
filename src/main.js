@@ -344,6 +344,12 @@ function showSavedPosters() {
   });
 }
 
+function cleanData() {
+  unmotivationalPosters.forEach(poster => {
+    createPoster(poster[img_url], poster[name], poster[description])
+  })
+}
+
 function displayMainPoster() {
   posterForm.classList.add("hidden");
   savedPostersView.classList.add("hidden");
