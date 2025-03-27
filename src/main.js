@@ -135,8 +135,10 @@ showRandomButton.addEventListener("click", setRandomPoster);
 showFormButton.addEventListener("click", displayForm);
 showMainButton.addEventListener("click", displayMainPoster);
 backToMainButton.addEventListener("click", displayMainPoster);
-showSavedButton.addEventListener("click", displaySavedPosters);
-showSavedButton.addEventListener("click", showSavedPosters);
+showSavedButton.addEventListener("click", function() {
+  showSavedPosters()
+  displaySavedPosters()
+});
 showPosterButton.addEventListener("click", setCurrentPoster);
 savePosterButton.addEventListener("click", savePoster);
 
