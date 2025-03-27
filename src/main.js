@@ -190,7 +190,9 @@ function setRandomPoster() {
   currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText);
 }
 
-function showSavedPosters(){
+function showSavedPosters() {
+  posterGrid.replaceChildren() // Ensure that there are no persisting posters
+
   savedPosters.forEach(poster => {
     const posterDiv = document.createElement("div");
     posterDiv.classList.add("mini-poster");
