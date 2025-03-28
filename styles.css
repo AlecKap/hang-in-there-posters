@@ -104,12 +104,19 @@ button:hover {
   width: 400px;
 }
 
-/* ~~~~~ SAVED POSTER SECTION ~~~~~ */
+/* ~~~~~ SAVED/UNMOTIVATIONAL POSTERS SECTION ~~~~~ */
 .saved-posters {
   padding: 40px;
 }
 
 .saved-posters-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.unmotivational-posters-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
