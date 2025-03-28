@@ -263,16 +263,19 @@ window.addEventListener("load", setRandomPoster) // Set a random poster apon ini
 showRandomBtn.addEventListener("click", setRandomPoster);
 showFormBtn.addEventListener("click", displayForm);
 showMainBtn.addEventListener("click", displayMainPoster);
+showPosterBtn.addEventListener("click", setCurrentPoster);
+savePosterBtn.addEventListener("click", savePoster);
 backToMainBtn.forEach(btn => {
   btn.addEventListener("click", displayMainPoster);
 });
-unmotivationalPostersBtn.addEventListener("click", displayUnmotivationalPosters);
-showSavedBtn.addEventListener("click", function() {
-  showSavedPosters()
-  displaySavedPosters()
+unmotivationalPostersBtn.addEventListener("click", function() {
+  displayUnmotivationalPosters();
+  cleanData();
 });
-showPosterBtn.addEventListener("click", setCurrentPoster);
-savePosterBtn.addEventListener("click", savePoster);
+showSavedBtn.addEventListener("click", function() {
+  showSavedPosters();
+  displaySavedPosters();
+});
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -353,17 +356,10 @@ function cleanData() {
     sadPosters.push(sadPoster)
   });
 
-  sadPosters.forEach(poster => {
-
-    unmotPosterGrid.innerHTML += 
-      `<div class="mini-poster">
-      <img class="img" src="${poster.imageURL}" alt="poster image">
-      <h2>${poster.title}</h2>
-      <h4>${poster.quote}</h4>
-      </div>`
-  });
+  showUnmotePosters(sadPosters)
 };
 
+// conventionally, should these be in their own helper methods? and then called
 function displayMainPoster() {
   posterForm.classList.add("hidden");
   savedPostersView.classList.add("hidden");
@@ -390,18 +386,30 @@ function displayUnmotivationalPosters() {
   savedPostersView.classList.add("hidden");
   posterForm.classList.add("hidden");
   unmotivationalPostersSection.classList.remove("hidden");
-  unmotPosterGrid.innerHTML = ""
-  cleanData()
 };
 
 // HELPER METHODS
 
 function ensureDataUniqueness() {
-  let uniqImgs = [...new Set(images)] // not sure if this is an appropriate use of a Set?
-  let uniqTitles = [...new Set(titles)]
-  let uniqQuotes = [...new Set(quotes)]
+  let uniqImgs = [...new Set(images)]; // not sure if this is an appropriate use of a Set?
+  let uniqTitles = [...new Set(titles)];
+  let uniqQuotes = [...new Set(quotes)];
 
-  images = uniqImgs
-  titles = uniqTitles
-  quotes = uniqQuotes
-}
+  images = uniqImgs;
+  titles = uniqTitles;
+  quotes = uniqQuotes;
+};
+
+function showUnmotePosters(sadPosters) {
+  unmotPosterGrid.innerHTML = ""
+
+  sadPosters.forEach(poster => {
+
+    unmotPosterGrid.innerHTML += 
+      `<div class="mini-poster">
+      <img class="img" src="${poster.imageURL}" alt="poster image">
+      <h2>${poster.title}</h2>
+      <h4>${poster.quote}</h4>
+      </div>`;
+  });
+};
