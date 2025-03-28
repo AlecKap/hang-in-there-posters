@@ -230,7 +230,9 @@ var currentPoster;
 const posterTitle = document.querySelector(".poster-title");
 const posterQuote = document.querySelector(".poster-quote");
 const posterImg = document.querySelector(".poster-img");
+
 const posterGrid = document.querySelector(".saved-posters-grid");
+const unmotPosterGrid = document.querySelector(".unmotivational-posters-grid");
 
 const showRandomBtn = document.querySelector(".show-random");
 const showFormBtn = document.querySelector(".show-form");
@@ -318,7 +320,7 @@ function setRandomPoster() {
   posterImg.src = images[getRandomIndex(images)];
 
   currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText);
-}
+};
 
 function showSavedPosters() {
   posterGrid.replaceChildren() // Ensure that there are no persisting posters
@@ -342,41 +344,55 @@ function showSavedPosters() {
   
     posterGrid.appendChild(posterDiv);
   });
-}
+};
 
 function cleanData() {
+  const sadPosters = []
   unmotivationalPosters.forEach(poster => {
-    createPoster(poster[img_url], poster[name], poster[description])
-  })
-}
+    let sadPoster = createPoster(poster.img_url, poster.name, poster.description);
+    sadPosters.push(sadPoster)
+  });
+
+  sadPosters.forEach(poster => {
+
+    unmotPosterGrid.innerHTML += 
+      `<div class="mini-poster">
+      <img class="img" src="${poster.imageURL}" alt="poster image">
+      <h2>${poster.title}</h2>
+      <h4>${poster.quote}</h4>
+      </div>`
+  });
+};
 
 function displayMainPoster() {
   posterForm.classList.add("hidden");
   savedPostersView.classList.add("hidden");
   unmotivationalPostersSection.classList.add("hidden");
   mainPoster.classList.remove("hidden");
-}
+};
 
 function displaySavedPosters() {
   mainPoster.classList.add("hidden");
   posterForm.classList.add("hidden");
   unmotivationalPostersSection.classList.add("hidden");
   savedPostersView.classList.remove("hidden");
-}
+};
 
 function displayForm() {
   mainPoster.classList.add("hidden");
   savedPostersView.classList.add("hidden");
   unmotivationalPostersSection.classList.add("hidden");
   posterForm.classList.remove("hidden");
-}
+};
 
 function displayUnmotivationalPosters() {
   mainPoster.classList.add("hidden");
   savedPostersView.classList.add("hidden");
   posterForm.classList.add("hidden");
   unmotivationalPostersSection.classList.remove("hidden");
-}
+  unmotPosterGrid.innerHTML = ""
+  cleanData()
+};
 
 // HELPER METHODS
 
