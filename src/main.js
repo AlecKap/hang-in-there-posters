@@ -357,7 +357,7 @@ function cleanData() {
 };
 
 function removeUnmotPoster(){
-  const miniPoster = event.target.closest(".mini-poster")
+  const miniPoster = event.target.closest(".u-mini-poster")
   let title = miniPoster.dataset.title
   if(miniPoster){
     let index;
@@ -369,7 +369,7 @@ function removeUnmotPoster(){
     }
     sadPosters.splice(index,1)
     
-    event.target.closest(".mini-poster").classList.add("hidden")
+    event.target.closest(".u-mini-poster").classList.add("hidden")
   }
 };
 
@@ -425,7 +425,7 @@ function clearPosterGrid() {
 function showUnmotePosters() {
   sadPosters.forEach(poster => {
     unmotPosterGrid.innerHTML += 
-      `<div class="mini-poster" data-title="${poster.title}">
+      `<div class="u-mini-poster" data-title="${poster.title}">
       <img class="img" src="${poster.imageURL}" alt="poster image">
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>
