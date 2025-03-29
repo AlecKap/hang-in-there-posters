@@ -253,7 +253,8 @@ const imgInput = document.querySelector("#poster-image-url");
 const titleInput = document.querySelector("#poster-title");
 const quoteInput = document.querySelector("#poster-quote");
 
-setRandomPoster() // Set a random poster apon initial page load
+setRandomPoster(); // Set a random poster apon initial page load
+cleanData(); // Clean data immediately apon initial page load
 
 // event listeners go here 👇)
 showRandomBtn.addEventListener("click", setRandomPoster);
@@ -261,12 +262,12 @@ showFormBtn.addEventListener("click", displayForm);
 showMainBtn.addEventListener("click", displayMainPoster);
 showPosterBtn.addEventListener("click", setCurrentPoster);
 savePosterBtn.addEventListener("click", savePoster);
+unmotPosterGrid.addEventListener("dblclick", removeUnmotPoster)
 backToMainBtn.forEach(btn => {
   btn.addEventListener("click", displayMainPoster);
 });
 unmotivationalPostersBtn.addEventListener("click", function() {
   displayUnmotivationalPosters();
-  cleanData();
   clearUnmoteGrid();
   showUnmotePosters();
 });
@@ -355,6 +356,23 @@ function cleanData() {
   });
 };
 
+function removeUnmotPoster(){
+  const miniPoster = event.target.closest(".mini-poster")
+  let title = miniPoster.dataset.title
+  if(miniPoster){
+    let index;
+    for (var i=0; i < sadPosters.length; i++){
+      if (title === sadPosters[i].title){
+        index = i
+        break
+      }
+    }
+    sadPosters.splice(index,1)
+    
+    event.target.closest(".mini-poster").classList.add("hidden")
+  }
+};
+
 // conventionally, should these be in their own helper methods? and then called
 function displayMainPoster() {
   posterForm.classList.add("hidden");
@@ -407,7 +425,7 @@ function clearPosterGrid() {
 function showUnmotePosters() {
   sadPosters.forEach(poster => {
     unmotPosterGrid.innerHTML += 
-      `<div class="mini-poster">
+      `<div class="mini-poster" data-title="${poster.title}">
       <img class="img" src="${poster.imageURL}" alt="poster image">
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>
