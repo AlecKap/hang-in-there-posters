@@ -226,6 +226,7 @@ let unmotivationalPosters = [
 
 var savedPosters = [];
 var currentPoster;
+var sadPosters = [];
 
 const posterTitle = document.querySelector(".poster-title");
 const posterQuote = document.querySelector(".poster-quote");
@@ -252,14 +253,9 @@ const imgInput = document.querySelector("#poster-image-url");
 const titleInput = document.querySelector("#poster-title");
 const quoteInput = document.querySelector("#poster-quote");
 
-// is this really where this should go? feels odd.
-// posterTitle.innerText = titles[getRandomIndex(images)];
-// posterQuote.innerText = quotes[getRandomIndex(images)];
-// posterImg.src = images[getRandomIndex(images)];
-// currentPoster = createPoster(posterImg.src, posterTitle.innerText, posterQuote.innerText)
+setRandomPoster() // Set a random poster apon initial page load
 
 // event listeners go here 👇)
-window.addEventListener("load", setRandomPoster) // Set a random poster apon initial page load
 showRandomBtn.addEventListener("click", setRandomPoster);
 showFormBtn.addEventListener("click", displayForm);
 showMainBtn.addEventListener("click", displayMainPoster);
@@ -271,17 +267,20 @@ backToMainBtn.forEach(btn => {
 unmotivationalPostersBtn.addEventListener("click", function() {
   displayUnmotivationalPosters();
   cleanData();
+  clearUnmoteGrid();
+  showUnmotePosters();
 });
 showSavedBtn.addEventListener("click", function() {
-  showSavedPosters();
   displaySavedPosters();
+  clearPosterGrid();
+  showSavedPosters();
 });
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
-}
+};
 
 function createPoster(imageURL, title, quote) {
   return {
@@ -289,7 +288,7 @@ function createPoster(imageURL, title, quote) {
     imageURL: imageURL, 
     title: title, 
     quote: quote
-  }
+  };
 }
 
 function setCurrentPoster(event) { // consider renaming this function. it doesn't seem so accurate
@@ -312,7 +311,7 @@ function setCurrentPoster(event) { // consider renaming this function. it doesn'
 
 function savePoster() {
   console.log(currentPoster)
-  if (!savedPosters.includes(currentPoster)) {
+  if(!savedPosters.includes(currentPoster)) {
     savedPosters.push(currentPoster);
   }
 }
@@ -326,8 +325,6 @@ function setRandomPoster() {
 };
 
 function showSavedPosters() {
-  posterGrid.replaceChildren() // Ensure that there are no persisting posters
-
   savedPosters.forEach(poster => {
     const posterDiv = document.createElement("div");
     posterDiv.classList.add("mini-poster");
@@ -350,13 +347,12 @@ function showSavedPosters() {
 };
 
 function cleanData() {
-  const sadPosters = []
   unmotivationalPosters.forEach(poster => {
     let sadPoster = createPoster(poster.img_url, poster.name, poster.description);
-    sadPosters.push(sadPoster)
+    if(!sadPosters.some(poster => poster.title === sadPoster.title)) {
+      sadPosters.push(sadPoster);
+    };
   });
-
-  showUnmotePosters(sadPosters)
 };
 
 // conventionally, should these be in their own helper methods? and then called
@@ -400,11 +396,16 @@ function ensureDataUniqueness() {
   quotes = uniqQuotes;
 };
 
-function showUnmotePosters(sadPosters) {
-  unmotPosterGrid.innerHTML = ""
+function clearUnmoteGrid() { //not working
+  unmotPosterGrid.innerHTML = ''
+}
 
+function clearPosterGrid() {
+  posterGrid.replaceChildren() // Ensure that there are no persisting posters
+}
+
+function showUnmotePosters() {
   sadPosters.forEach(poster => {
-
     unmotPosterGrid.innerHTML += 
       `<div class="mini-poster">
       <img class="img" src="${poster.imageURL}" alt="poster image">
