@@ -235,6 +235,13 @@ const posterImg = document.querySelector(".poster-img");
 const posterGrid = document.querySelector(".saved-posters-grid");
 const unmotPosterGrid = document.querySelector(".unmotivational-posters-grid");
 
+// modal
+const modal = document.querySelector("#myModal");
+const span = document.querySelector(".close");
+const modalBtn = document.querySelector(".modalBtn");
+const modalContent = document.querySelector(".modal-content");
+
+
 const showRandomBtn = document.querySelector(".show-random");
 const showFormBtn = document.querySelector(".show-form");
 const showMainBtn = document.querySelector(".show-main");
@@ -262,7 +269,8 @@ showFormBtn.addEventListener("click", displayForm);
 showMainBtn.addEventListener("click", displayMainPoster);
 showPosterBtn.addEventListener("click", setCurrentPoster);
 savePosterBtn.addEventListener("click", savePoster);
-unmotPosterGrid.addEventListener("dblclick", removeUnmotPoster)
+unmotPosterGrid.addEventListener("contextmenu", removeUnmotPoster)
+unmotPosterGrid.addEventListener("click", showPosterInModal)
 backToMainBtn.forEach(btn => {
   btn.addEventListener("click", displayMainPoster);
 });
@@ -276,6 +284,19 @@ showSavedBtn.addEventListener("click", function() {
   clearPosterGrid();
   showSavedPosters();
 });
+
+// modal
+modal.addEventListener("click", function (event) {
+  if (event.target.classList.contains("close")) {
+    modal.style.display = "none"
+  }
+})
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none"
+  }
+}
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -356,21 +377,37 @@ function cleanData() {
   });
 };
 
-function removeUnmotPoster(){
-  const miniPoster = event.target.closest(".u-mini-poster")
-  let title = miniPoster.dataset.title
-  if(miniPoster){
-    let index;
-    for (var i=0; i < sadPosters.length; i++){
-      if (title === sadPosters[i].title){
-        index = i
+function removeUnmotPoster(event){
+  const miniPoster = event.target.closest(".u-mini-poster");
+  console.log(event)
+  let title = miniPoster.dataset.title;
+  if(miniPoster) {
+    for (var i=0; i < sadPosters.length; i++) {
+      if (title === sadPosters[i].title) {
+        sadPosters.splice(i,1);
         break
-      }
-    }
-    sadPosters.splice(index,1)
-    
-    event.target.closest(".u-mini-poster").classList.add("hidden")
+      };
+    };
+    unmotPosterGrid.innerHTML = ''
+    showUnmotePosters()
+    // event.target.closest(".u-mini-poster").classList.add("hidden");
   }
+};
+
+function showPosterInModal(event) {
+  modal.style.display = "block";
+  const miniPoster = event.target.closest(".u-mini-poster");
+  let title = miniPoster.dataset.title;
+  let quote = miniPoster.dataset.quote;
+  let img = miniPoster.dataset.img;
+
+  modalContent.innerHTML =
+    `<div class="m-mini-poster">
+    <img class="img" src="${img}" alt="poster image">
+    <h2>${title}</h2>
+    <h4>${quote}</h4>
+    </div>
+    <button class="close">Close</button>`;
 };
 
 // conventionally, should these be in their own helper methods? and then called
@@ -414,7 +451,7 @@ function ensureDataUniqueness() {
   quotes = uniqQuotes;
 };
 
-function clearUnmoteGrid() { //not working
+function clearUnmoteGrid() {
   unmotPosterGrid.innerHTML = ''
 }
 
@@ -425,7 +462,7 @@ function clearPosterGrid() {
 function showUnmotePosters() {
   sadPosters.forEach(poster => {
     unmotPosterGrid.innerHTML += 
-      `<div class="u-mini-poster" data-title="${poster.title}">
+      `<div class="u-mini-poster" data-title="${poster.title}", data-quote="${poster.quote}", data-img="${poster.imageURL}">
       <img class="img" src="${poster.imageURL}" alt="poster image">
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>
