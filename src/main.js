@@ -394,6 +394,17 @@ function removeUnmotPoster(event){
   }
 };
 
+function showUnmotePosters() {
+  sadPosters.forEach(poster => {
+    unmotPosterGrid.innerHTML += 
+      `<div class="u-mini-poster" data-title="${poster.title}", data-quote="${poster.quote}", data-img="${poster.imageURL}">
+      <img class="img" src="${poster.imageURL}" alt="poster image">
+      <h2>${poster.title}</h2>
+      <h4>${poster.quote}</h4>
+      </div>`;
+  });
+};
+
 function showPosterInModal(event) {
   modal.style.display = "block";
   const miniPoster = event.target.closest(".u-mini-poster");
@@ -458,14 +469,3 @@ function clearUnmoteGrid() {
 function clearPosterGrid() {
   posterGrid.replaceChildren() // Ensure that there are no persisting posters
 }
-
-function showUnmotePosters() {
-  sadPosters.forEach(poster => {
-    unmotPosterGrid.innerHTML += 
-      `<div class="u-mini-poster" data-title="${poster.title}", data-quote="${poster.quote}", data-img="${poster.imageURL}">
-      <img class="img" src="${poster.imageURL}" alt="poster image">
-      <h2>${poster.title}</h2>
-      <h4>${poster.quote}</h4>
-      </div>`;
-  });
-};
